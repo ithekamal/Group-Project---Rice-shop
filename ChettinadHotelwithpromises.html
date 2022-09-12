@@ -1,180 +1,269 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chettinad Hotel</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <h1>Chettinad Hotel</h1>
-    <p>For those with pure food indulgence in mind, come next door and sate your desires with our ever changing
-        internationally and seasonally inspired small plates. We love food, lots of different food, just like you.</p>
-
-
+    <p>
+      For those with pure food indulgence in mind, come next door and sate your
+      desires with our ever changing internationally and seasonally inspired
+      small plates. We love food, lots of different food, just like you.
+    </p>
 
     <script>
+      //1.Login Form USINg promises
+      userdetails = [
+        {
+          emailId: "krishheror@gmail.com",
+          name: "kamal",
+          phoneNumber: "6369880741",
+        },
+        {
+          emailId: "gpmuthu@gmail.com",
+          name: "thalaivar",
+          phoneNumber: "9876543210",
+        },
+      ];
 
-        //1.Login Form USINg promises   
-        userdetails = [
-            { emailId: 'krishheror@gmail.com', name: 'kamal', phoneNumber: '6369880741' },
-            { emailId: 'gpmuthu@gmail.com', name: 'thalaivar', phoneNumber: '9876543210' },
-        ]
+      alert("Welcome To Chettinad Hotel");
 
-        alert('Welcome To Chettinad Hotel')
+      inputFromUser = prompt("Welcome Kindly enter your Mobile Number");
 
-        inputFromUser = prompt('Welcome Kindly enter your Mobile Number')
-
-        let currentUserDetails = []
-        //function to check if the user is alredy a Member
-        function signUpDetails(listOfUsers, userInput, indiviualUserDetails) {
-            detailOfaUser = []
-            for (user = 0; user < listOfUsers.length; user++) {
-                if (userInput == listOfUsers[user].phoneNumber) {
-                    detailOfaUser.push(listOfUsers[user])
-                }
-            }
-
-            if (detailOfaUser.length != 0) {
-                indiviualUserDetails.push(detailOfaUser[0])
-                return detailOfaUser[0]
-
-            }
-            else {
-                return false
-            }
-        }
-        //function to register new member
-        function signIn(individualUser) {
-            alert("You are Not yet Signed in!\nLet's we create a new Account for you:) ")
-            mailidByUser = prompt('Enter Your Mail ID')
-            username = prompt('Enter Your Name').toUpperCase()
-            mobileNumber = inputFromUser
-            newUserInfo = {}
-            newUserInfo['emailId'] = mailidByUser
-            newUserInfo['name'] = username
-            newUserInfo['phoneNumber'] = mobileNumber
-            currentUserDetails.push(newUserInfo)
-            // console.log('Now the Individual User',currentUserDetails)
-            return newUserInfo
+      let currentUserDetails = [];
+      //function to check if the user is alredy a Member
+      function signUpDetails(listOfUsers, userInput, indiviualUserDetails) {
+        detailOfaUser = [];
+        for (user = 0; user < listOfUsers.length; user++) {
+          if (userInput == listOfUsers[user].phoneNumber) {
+            detailOfaUser.push(listOfUsers[user]);
+          }
         }
 
-        newUser = signUpDetails(userdetails, inputFromUser, currentUserDetails)
-        //function check user is member or not
-        const promiseUserInfo = (alreadyAuser, excistinguserDetails) => {
-            loginCheck = new Promise((resolve, reject) => {
-                if (!alreadyAuser) {
-                    resolve(signIn(currentUserDetails))
-                }
-                else {
-                    reject(alert(`Welcome Back!,${excistinguserDetails[0].name}`))
-                }
-            })
-            return loginCheck
+        if (detailOfaUser.length != 0) {
+          indiviualUserDetails.push(detailOfaUser[0]);
+          return detailOfaUser[0];
+        } else {
+          return false;
         }
+      }
+      //function to register new member
+      function signIn(individualUser) {
+        alert(
+          "You are Not yet Signed in!\nLet's we create a new Account for you:) "
+        );
+        mailidByUser = prompt("Enter Your Mail ID");
+        username = prompt("Enter Your Name").toUpperCase();
+        mobileNumber = inputFromUser;
+        newUserInfo = {};
+        newUserInfo["emailId"] = mailidByUser;
+        newUserInfo["name"] = username;
+        newUserInfo["phoneNumber"] = mobileNumber;
+        currentUserDetails.push(newUserInfo);
+        // console.log('Now the Individual User',currentUserDetails)
+        return newUserInfo;
+      }
 
-        promiseUserInfo(newUser, currentUserDetails).then(() => {
+      newUser = signUpDetails(userdetails, inputFromUser, currentUserDetails);
+      //function check user is member or not
+      const promiseUserInfo = (alreadyAuser, excistinguserDetails) => {
+        loginCheck = new Promise((resolve, reject) => {
+          if (!alreadyAuser) {
+            resolve(signIn(currentUserDetails));
+          } else {
+            reject(alert(`Welcome Back!,${excistinguserDetails[0].name}`));
+          }
+        });
+        return loginCheck;
+      };
 
-            document.write(`You Are now Just Became Our Family, ${currentUserDetails[0]['name']}`)
-            alert('Discover Menu & Order food :)')
+      promiseUserInfo(newUser, currentUserDetails)
+        .then(() => {
+          document.write(
+            `<br><br>You Are now Just Became Our Family, ${currentUserDetails[0]["name"]}`
+          );
+          alert("Discover Menu & Order food :)");
+        })
+
+        .catch(() => {
+          currentUserDetails.push(newUser);
+          document.write(
+            `It is Good to see you again ${currentUserDetails[0].name}`
+          );
+        });
+
+      //2.Taking Order
+
+      orderDetails = {};
+
+      rice = [
+        {
+          types: [
+            { food: "1.VEG BIRIYANI", price: 100 },
+            { food: "2.TAMARIND RICE", price: 200 },
+            { food: "3.COCONUT RICE", price: 200 },
+            { food: "4.MANGO RICE", price: 100 },
+            { food: "5.PUTHINA RICE", price: 100 },
+          ],
+        },
+        {
+          option1: [
+            { option: "1.With SideDish", price: 10 },
+            { option: "2.without SideDish", price: 0 },
+          ],
+        },
+        {
+          option2: [
+            { option: "1.Ac Room", price: 15 },
+            { option: "2.Non AC Room", price: 5 },
+          ],
+        },
+        {
+          option3: [
+            { option: "1.Dessert", price: 30 },
+            { option: "2.Without Desert", price: 0 },
+          ],
+        },
+      ];
+      //function returns all keys in rice array
+      function returnAllMainOptionsinArray(mainArrayOfObjects) {
+        optionsAvailable = [];
+        options = mainArrayOfObjects.forEach((element) => {
+          optionsAvailable.push(Object.keys(element).toString());
+        }); // [ [ 'types' ], [ 'option1' ] ]
+        return optionsAvailable;
+      }
+      //function prints the options with fair
+      function printingItemsAndFair(listOfItems, elementsInsideEachItem) {
+        arrayOfContent = [];
+        for (item = 0; item < elementsInsideEachItem.length; item++) {
+          arrayOfContent.push(
+            listOfItems[item][elementsInsideEachItem[0]].padEnd(0, 15) +
+              " and fair is ".padStart(4) +
+              listOfItems[item][elementsInsideEachItem[1]]
+          );
         }
-        )
-
-            .catch(() => {
-                currentUserDetails.push(newUser)
-                document.write(`It is Good to see you again ${currentUserDetails[0].name}`)
-            })
-
-
-        //2.Taking Order 
-
-        orderDetails = {}
-
-        rice = [{ types: [{ food: '1.VEG BIRIYANI', price: 100 }, { food: '2.TAMARIND RICE', price: 200 }, { food: '3.COCONUT RICE', price: 200 }, { food: '4.MANGO RICE', price: 100 }, { food: '5.PUTHINA RICE', price: 100 }] },
-        { option1: [{ option: '1.With SideDish', price: 10 }, { option: '2.without SideDish', price: 0 }] },
-        { option2: [{ option: '1.Ac Room', price: 15 }, { option: '2.Non AC Room', price: 5 }] },
-        { option3: [{ option: '1.Dessert', price: 30 }, { option: '2.Without Desert', price: 0 }] }]
-        //function returns all keys in rice array
-        function returnAllMainOptionsinArray(mainArrayOfObjects) {
-            optionsAvailable = []
-            options = mainArrayOfObjects.forEach(element => { optionsAvailable.push((Object.keys(element)).toString()) })    // [ [ 'types' ], [ 'option1' ] ]
-            return optionsAvailable
+        return arrayOfContent;
+      }
+      //function to get user input
+      function printingAndGettingInputsforOptions(
+        option,
+        functionStoresOrder,
+        mainOptions,
+        currentOption,
+        printingItemCotent
+      ) {
+        for (attempt = 0; attempt < 1; attempt++) {
+          elementsInOption = Object.keys(option[0]); // [food, price]
+          inputByUser = prompt(
+            `${printingItemCotent(option, elementsInOption).join("\n")}`,
+            "either Enter the dish name or Enter the number"
+          );
+          value = functionStoresOrder(
+            inputByUser,
+            option,
+            mainOptions,
+            currentOption,
+            elementsInOption
+          );
+          if (!value) {
+            alert("kINDLY ENTER THE CORRECT VALUE");
+            attempt--;
+          }
         }
-        //function prints the options with fair
-        function printingItemsAndFair(listOfItems, elementsInsideEachItem) {
-            arrayOfContent = []
-            for (item = 0; item < elementsInsideEachItem.length; item++) {
-                arrayOfContent.push(((listOfItems[item])[(elementsInsideEachItem[0])]).padEnd(0, 15) + (' and fair is ').padStart(4) + (listOfItems[item])[(elementsInsideEachItem[1])])
-            }
-            return arrayOfContent
+      }
+      //function stores  user's all Input in single Object
+      function storingOrder(
+        givenInput,
+        searchingPlace,
+        arrayOfMainOptions,
+        currentAttemptNo,
+        subElement
+      ) {
+        for (everyItem of searchingPlace) {
+          if (
+            everyItem[subElement[0]].slice(0, 1) == givenInput ||
+            everyItem[subElement[0]].slice(2) == givenInput
+          ) {
+            orderDetails[everyItem[subElement[0]].slice(2)] =
+              everyItem[subElement[1]];
+            return true;
+          }
         }
-        //function to get user input 
-        function printingAndGettingInputsforOptions(option, functionStoresOrder, mainOptions, currentOption, printingItemCotent) {
-            for (attempt = 0; attempt < 1; attempt++) {
-                elementsInOption = (Object.keys(option[0]))   // [food, price]
-                inputByUser = prompt(`${printingItemCotent(option, elementsInOption)}`, 'enter Your choice')
-                value = functionStoresOrder(inputByUser, option, mainOptions, currentOption, elementsInOption)
-                if (!value) {
-                    alert('kINDLY ENTER THE CORRECT VALUE')
-                    attempt--
-                }
-            }
-
+      }
+      //main function to take Orders
+      function summary(
+        mainObject,
+        functionExtractsMainOptions,
+        functionStoresOrderinObj,
+        itemContent
+      ) {
+        optionsAvailable = functionExtractsMainOptions(mainObject);
+        for (optionNo = 0; optionNo < mainObject.length; optionNo++) {
+          eachOption = mainObject[optionNo][optionsAvailable[optionNo]];
+          printingAndGettingInputsforOptions(
+            eachOption,
+            functionStoresOrderinObj,
+            optionsAvailable,
+            optionNo,
+            itemContent
+          );
         }
-        //function stores  user's all Input in single Object
-        function storingOrder(givenInput, searchingPlace, arrayOfMainOptions, currentAttemptNo, subElement) {
-            for (everyItem of searchingPlace) {
-                if ((everyItem[(subElement[0])]).slice(0, 1) == givenInput || ((everyItem[subElement[0]])).slice(2) == givenInput) {
-                    orderDetails[((everyItem[subElement[0]])).slice(2)] = ((everyItem[subElement[1]]))
-                    return true
-                }
-            }
-        }
-        //main function to take Orders
-        function summary(mainObject, functionExtractsMainOptions, functionStoresOrderinObj, itemContent) {
-            optionsAvailable = functionExtractsMainOptions(mainObject)
-            for (optionNo = 0; optionNo < mainObject.length; optionNo++) {
-                eachOption = mainObject[optionNo][optionsAvailable[optionNo]]
-                printingAndGettingInputsforOptions(eachOption, functionStoresOrderinObj, optionsAvailable, optionNo, itemContent)
-            }
-        }
+      }
 
-        summary(rice, returnAllMainOptionsinArray, storingOrder, printingItemsAndFair)
+      summary(
+        rice,
+        returnAllMainOptionsinArray,
+        storingOrder,
+        printingItemsAndFair
+      );
 
-        //part3.Printing Procedure Using Async
+      randomNumberForId= Math.floor(Math.random()*1000)
 
+
+      //part3.Printing Procedure Using Async
+
+      setTimeout(() => {
+        document.write("cutting veg<br><br>");
         setTimeout(() => {
-            document.write('cutting veg\n')
+          document.write("boiling rice<br><br>");
+          setTimeout(() => {
+            document.write("frying vegitable<br><br>");
             setTimeout(() => {
-                document.write('boiling rice\n')
-                setTimeout(() => {
-                    document.write("frying vegitable\n")
-                    setTimeout(() => { document.write("your order is ready!!!\n") }, 3000)
-                }, 3000)
-            }, 2000)
-        }, 4000)
+              document.write("your order is ready!!!<br><br>Order Id :", (currentUserDetails[0]["name"])+randomNumberForId);
+            }, 3000);
+          }, 3000);
+        }, 2000);
+      }, 4000);
 
 
-        function printingBill(bill) {
-            keysInOutput = Object.keys(bill)
-            valuesInOutput = Object.values(bill)
-            totalbillAmount = valuesInOutput.reduce((prev, nxt) => prev + nxt)
-
-            for (item = 0; item < keysInOutput.length; item++) {
-                document.write(`\n${(keysInOutput[item]).padEnd(26, '.')}  Rs.${(valuesInOutput[item])}`)
-                console.log(`\n${(keysInOutput[item]).padEnd(26, '.')}  Rs.${(valuesInOutput[item])}`)
-
-            }
-            document.write('\nTotal Bill Amount         = Rs.', totalbillAmount)
-            console.log('\nTotal Bill Amount         = Rs.', totalbillAmount)
-
+      function printingBill(bill) {
+        billTobePrinted = [];
+        keysInOutput = Object.keys(bill);
+        valuesInOutput = Object.values(bill);
+        totalbillAmount = valuesInOutput.reduce((prev, nxt) => prev + nxt);
+        billTobePrinted.push("------ The Bill -------");
+        for (item = 0; item < keysInOutput.length; item++) {
+          if (valuesInOutput[item] != 0)
+            billTobePrinted.push(
+              `${keysInOutput[item].padEnd(26, ".")}  Rs.${
+                valuesInOutput[item]
+              }`
+            );
         }
-        printingBill(orderDetails)
+        billTobePrinted.push("-----------------------------------");
+        billTobePrinted.push(
+          `Total Bill Amount         = Rs.${totalbillAmount}`
+        );
+        billTobePrinted.push("-----------------------------------");
+        return billTobePrinted;
+      }
 
-
+      document.write(`${printingBill(orderDetails).join('<br><br>')} <br><br>`)
     </script>
-</body>
-
+  </body>
 </html>
