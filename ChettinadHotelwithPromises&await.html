@@ -2,19 +2,19 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chettinad Hotel</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chettinad Hotel</title>
 </head>
 
 <body>
-    <h1>Chettinad Hotel</h1>
-    <p>For those with pure food indulgence in mind, come next door and sate your desires with our ever changing
-        internationally and seasonally inspired small plates. We love food, lots of different food, just like you.</p>
+  <h1>Chettinad Hotel</h1>
+  <p>For those with pure food indulgence in mind, come next door and sate your desires with our ever changing
+    internationally and seasonally inspired small plates. We love food, lots of different food, just like you.</p>
 
-    <script>
-        //1.Login Form USINg promises   
+  <script>
+    //1.Login Form USINg promises   
         userdetails = [
             { emailId: 'krishheror@gmail.com', name: 'kamal', phoneNumber: '6369880741' },
             { emailId: 'gpmuthu@gmail.com', name: 'thalaivar', phoneNumber: '9876543210' },
@@ -22,7 +22,18 @@
 
         alert('Welcome To Chettinad Hotel')
 
-        inputFromUser = prompt('Welcome Kindly enter your Mobile Number')
+       
+       inputFromUser = 0
+        while(inputFromUser ===  0){
+          mobileNumerFromUser = prompt('Enter your Mobile Numer')
+          String.prototype.findNumberorNot = function(){return /^\d+$/.test(this);}
+          if((mobileNumerFromUser.findNumberorNot()) &&  mobileNumerFromUser.length == 10 ){
+          inputFromUser +=  parseInt(mobileNumerFromUser, 10)
+          }
+          else{
+            alert('Kindly Enter the Correct Mobile Number')
+          }
+        }
 
         let currentUserDetails = []
         //function to check if the user is alredy a Member
@@ -43,18 +54,35 @@
                 return false
             }
         }
+        //function to check input is  appropriate
+        
+function checkAppropriateValues(prinitingText,usersinputLength,variableType){
+  value = ''
+  while(value.length == 0){
+    inputGotFromUser = prompt(`${prinitingText}`,'Enter here') 
+    if(inputGotFromUser.length >= usersinputLength){
+      value = value + inputGotFromUser
+    }
+    else{
+      alert(`Kindly Enter Correct ${variableType}\nThe ${variableType} should be atleast ${usersinputLength} Long.`)
+    }
+  }
+  return value
+}
+        
+
+
         //function to register new member
-        function signIn(individualUser) {
+        function signIn(individualUser,inputLengthChecking) {
             alert("You are Not Signed in Yet!\nLet's we create a new Account for you:) ")
-            mailidByUser = prompt('Enter Your Mail ID')
-            username = prompt('Enter Your Name').toUpperCase()
+            mailidByUser = inputLengthChecking('Enter your MailId',12,'mail Id')
+            username = (inputLengthChecking('Enter your Name',3,'name')).toUpperCase()
             mobileNumber = inputFromUser
             newUserInfo = {}
             newUserInfo['emailId'] = mailidByUser
             newUserInfo['name'] = username
             newUserInfo['phoneNumber'] = mobileNumber
             currentUserDetails.push(newUserInfo)
-            // console.log('Now the Individual User',currentUserDetails)
             return newUserInfo
         }
 
@@ -63,7 +91,7 @@
         const promiseUserInfo = (alreadyAuser, excistinguserDetails) => {
             loginCheck = new Promise((resolve, reject) => {
                 if (!alreadyAuser) {
-                    resolve(signIn(currentUserDetails))
+                    resolve(signIn(currentUserDetails,checkAppropriateValues))
                 }
                 else {
                     reject(alert(`Welcome Back ! ${excistinguserDetails[0].name},`))
@@ -202,7 +230,7 @@ async function asyncCall() {
 asyncCall();
         
         
-    </script>
+  </script>
 </body>
 
 </html>
