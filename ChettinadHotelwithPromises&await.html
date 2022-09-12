@@ -13,10 +13,7 @@
     <p>For those with pure food indulgence in mind, come next door and sate your desires with our ever changing
         internationally and seasonally inspired small plates. We love food, lots of different food, just like you.</p>
 
-
-
     <script>
-
         //1.Login Form USINg promises   
         userdetails = [
             { emailId: 'krishheror@gmail.com', name: 'kamal', phoneNumber: '6369880741' },
@@ -48,7 +45,7 @@
         }
         //function to register new member
         function signIn(individualUser) {
-            alert("You are Not yet Signed in!\nLet's we create a new Account for you:) ")
+            alert("You are Not Signed in Yet!\nLet's we create a new Account for you:) ")
             mailidByUser = prompt('Enter Your Mail ID')
             username = prompt('Enter Your Name').toUpperCase()
             mobileNumber = inputFromUser
@@ -69,7 +66,7 @@
                     resolve(signIn(currentUserDetails))
                 }
                 else {
-                    reject(alert(`Welcome Back!${excistinguserDetails[0].name},`))
+                    reject(alert(`Welcome Back ! ${excistinguserDetails[0].name},`))
                 }
             })
             return loginCheck
@@ -84,7 +81,7 @@
 
             .catch(() => {
                 currentUserDetails.push(newUser)
-                document.write(`It is Good to see you again ${currentUserDetails[0].name}`)
+                document.write(`It is Good to see you again!. ${currentUserDetails[0].name}`)
             })
 
 
@@ -114,7 +111,7 @@
         function printingAndGettingInputsforOptions(option, functionStoresOrder, mainOptions, currentOption, printingItemCotent) {
             for (attempt = 0; attempt < 1; attempt++) {
                 elementsInOption = (Object.keys(option[0]))   // [food, price]
-                inputByUser = prompt(`${printingItemCotent(option, elementsInOption)}`, 'enter Your choice')
+                inputByUser = prompt(`${(printingItemCotent(option, elementsInOption)).join('\n')}`, 'Either type the Item name or Enter dish No')
                 value = functionStoresOrder(inputByUser, option, mainOptions, currentOption, elementsInOption)
                 if (!value) {
                     alert('kINDLY ENTER THE CORRECT VALUE')
@@ -144,53 +141,63 @@
         summary(rice, returnAllMainOptionsinArray, storingOrder, printingItemsAndFair)
         document.write('We are Preparing your Meal with Love :)...\nWait for few Seconds.....')
 
-        //part3.Printing Procedure Using Async
+// printing Bills
+function printingBill(bill) {
+  billTobePrinted = []
+  keysInOutput = Object.keys(bill);
+  valuesInOutput = Object.values(bill);
+  totalbillAmount = valuesInOutput.reduce((prev, nxt) => prev + nxt);
+  billTobePrinted.push("------ The Bill -------");
+  for (item = 0; item < keysInOutput.length; item++) {
+    if( (valuesInOutput[item]) != 0)
+    billTobePrinted.push(
+      `${keysInOutput[item].padEnd(26, ".")}  Rs.${
+        valuesInOutput[item]
+      }`
+    );
+  }
+  billTobePrinted.push('-----------------------------------')
+  billTobePrinted.push(`Total Bill Amount         = Rs.${totalbillAmount}`);
+  billTobePrinted.push('-----------------------------------')
+  return billTobePrinted
+}
 
-    
-        function printingBill(bill) {
-            keysInOutput = Object.keys(bill)
-            valuesInOutput = Object.values(bill)
-            totalbillAmount = valuesInOutput.reduce((prev, nxt) => prev + nxt)
-
-            for (item = 0; item < keysInOutput.length; item++) {
-                document.write(`\n${(keysInOutput[item]).padEnd(26, '.')}  Rs.${(valuesInOutput[item])}`)
-                console.log(`\n${(keysInOutput[item]).padEnd(26, '.')}  Rs.${(valuesInOutput[item])}`)
-
-            }
-            document.write('\nTotal Bill Amount         = Rs.', totalbillAmount)
-            console.log('\nTotal Bill Amount         = Rs.', totalbillAmount)
-
-        }
-        // printingBill(orderDetails)
-       function shortSummary() {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(
+function shortSummary() {
+  return new Promise((resolve) => {
+    resolve(
+      setTimeout(() => {
+        document.write(`We just Started Our Process...<br><br>`);
         setTimeout(() => {
-            document.write('cutting veg...\n')
+          setTimeout(() => {
+            document.write(`Kindly Wait for Few seconds...<br><br> `);
             setTimeout(() => {
-                document.write('boiling rice...\n')
+              document.write("cutting veg...<br><br>");
+              setTimeout(() => {
+                document.write("boiling rice...<br><br>");
                 setTimeout(() => {
-                    document.write("frying vegitable...\n")
-                    setTimeout(() => { document.write("your order is ready!!!\n") }, 3000)
-                }, 3000)
-            }, 2000)
-        }, 6000)
-      );
-    }, 1000);
+                  document.write("frying vegitable...<br><br>");
+                  setTimeout(() => {
+                    document.write("your order is ready!!!<br><br>");
+                    setTimeout(() => document.write(printingBill(orderDetails).join('<br><br>')), 2000);
+                  }, 3000);
+                }, 3000);
+              }, 2000);
+            }, 3000);
+          }, 1000);
+        }, 2000);
+      }, 2000)
+    );
   });
 }
 
-        async function asyncCall() {
-
-document.write ('We are Preparing Specially for you ...')
-await shortSummary();
-  
+async function asyncCall() {
+  document.write("We are Preparing Specially for you ...<br><br>");
+  await shortSummary();
 }
 
-        asyncCall();
-        printingBill(orderDetails)  
-
+asyncCall();
+        
+        
     </script>
 </body>
 
