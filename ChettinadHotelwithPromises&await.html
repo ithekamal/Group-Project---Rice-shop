@@ -162,6 +162,9 @@ function printingBill(bill) {
   return billTobePrinted
 }
 
+randomNumberForId = Math.floor(Math.random() * 1000);
+
+//to print the process
 function shortSummary() {
   return new Promise((resolve) => {
     resolve(
@@ -177,7 +180,8 @@ function shortSummary() {
                 setTimeout(() => {
                   document.write("frying vegitable...<br><br>");
                   setTimeout(() => {
-                    document.write("your order is ready!!!<br><br>");
+                    document.write(`your order is ready!!!<br><br>Order Id :,
+                ${currentUserDetails[0]["name"] + randomNumberForId}<br><br>`);
                     setTimeout(() => document.write(printingBill(orderDetails).join('<br><br>')), 2000);
                   }, 3000);
                 }, 3000);
